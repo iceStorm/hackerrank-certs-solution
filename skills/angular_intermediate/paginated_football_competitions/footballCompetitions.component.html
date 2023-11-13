@@ -1,0 +1,20 @@
+<div class="layout-column align-items-center mt-50">
+  <section
+    class="layout-row align-items-center justify-content-center"
+    data-test-id="page-number-buttons"
+  >
+    <button *ngFor="let page of pages; let i = index" (click)="paginate(i + 1)">
+      {{ i + 1 }}
+    </button>
+  </section>
+
+  <ul *ngIf="apiData" class="mt-50 styled" data-test-id="football-competitions">
+    <li
+      class="slide-up-fade-in py-10"
+      *ngFor="let item of apiData.data; let i = index"
+    >
+      Competition {{ item.name }} won by {{ item.winner }} in year
+      {{ item.year }}
+    </li>
+  </ul>
+</div>
