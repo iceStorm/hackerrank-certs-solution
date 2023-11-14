@@ -1,0 +1,61 @@
+<form class="layout-row" #form="ngForm" (ngSubmit)="onSubmit()">
+  <section class="layout-column align-items-center justify-content-center">
+    <input
+      ngModel
+      name="name"
+      type="text"
+      data-test-id="app-input-name"
+      required
+      placeholder="Name"
+    />
+    <input
+      ngModel
+      name="genre"
+      type="text"
+      data-test-id="app-input-genre"
+      required
+      placeholder="Genre"
+    />
+    <input
+      ngModel
+      name="creator"
+      type="text"
+      data-test-id="app-input-creator"
+      required
+      placeholder="Creator"
+    />
+    <div>
+      <label
+        ><input
+          class="radioButton"
+          data-test-id="app-input-book-type"
+          type="radio"
+          name="type"
+          value="Book"
+          ngModel
+        />Book</label
+      >
+      <label
+        ><input
+          class="radioButton"
+          data-test-id="app-input-song-type"
+          type="radio"
+          name="type"
+          value="Song"
+          ngModel
+        />Song</label
+      >
+    </div>
+    <input
+      ngModel
+      name="totalTime"
+      *ngIf="form.value?.type === 'Song'"
+      data-test-id="app-input-time"
+      type="number"
+      placeholder="Total Time"
+    />
+  </section>
+  <section class="layout-row justify-content-center align-items-center">
+    <button data-test-id="add-button" class="w-30">Add</button>
+  </section>
+</form>
