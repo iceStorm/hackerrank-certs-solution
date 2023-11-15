@@ -13,84 +13,29 @@ import sys
 # The function is expected to return an INTEGER.
 # The function accepts 2D_INTEGER_ARRAY grid as parameter.
 #
-
 def numCells(grid):
-    dominant_cells = 0
-    x = 0
+    # Write your code here
+    result = 0
 
-    for row in range(0, len(grid)):
-        y = 0
+    for i in range(len(grid)):
+        for k in range(len(grid[0])):
+            value = grid[i][k]
+            flag = 1
 
-        for cell in range(0, len(grid[row])):
-            neighborValues = get_cell_neighbors(grid, x, y)
-            print("x:", x, "y:", y, " neighbors:", neighborValues)
-            
-            if all(cell > neighbor for neighbor in neighborValues):
-                dominant_cell += 1
-            
-            y += 1
-        
-        x += 1
-    
-    return dominant_cells
+            for ii in range(max(0, i - 1), min(len(grid), i + 2)):
+                for kk in range(max(0, k - 1), min(len(grid[0]), k + 2)):
+                    if (ii, kk) != (i, k) and value <= grid[ii][kk]:
+                        flag = 0
+                        break
 
-def get_cell_neighbors(grid, x, y):
-    left_cell = 0
-    right_cell = 0
-    top_cell = 0
-    bottom_cell = 0
-    top_left_cell = 0
-    bottom_left_cell = 0
-    top_right_cell = 0
-    bottom_right_cell = 0
+                if flag == 0:
+                    break
+            else:
+                result += 1
 
-    try:
-        left_cell = grid[x][y - 1]
-    except:
-        pass
-    try:
-        right_cell = grid[x][y + 1]
-    except:
-        pass
+    return result
 
-    try:
-        top_cell = grid[x - 1][y]
-    except:
-        pass
-    try:
-        bottom_cell = grid[x + 1][y]
-    except:
-        pass
-    
-    try:
-        top_left_cell = grid[x - 1][y - 1]
-    except:
-        pass
-    try:
-        bottom_left_cell = grid[x + 1][y - 1]
-    except:
-        pass
-    
-    try:
-        top_right_cell = grid[x - 1][y + 1]
-    except:
-        pass
-    try:
-        bottom_right_cell = grid[x + 1][y + 1]
-    except:
-        pass
-    
-    return [
-        left_cell,
-        right_cell,
-        top_cell,
-        bottom_cell,
-        top_left_cell,
-        bottom_left_cell,
-        top_right_cell,
-        bottom_right_cell
-    ]
-    
+
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
