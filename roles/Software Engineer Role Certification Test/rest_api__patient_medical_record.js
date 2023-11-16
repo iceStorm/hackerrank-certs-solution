@@ -1,40 +1,3 @@
-"use strict";
-
-const fs = require("fs");
-const https = require("https");
-
-process.stdin.resume();
-process.stdin.setEncoding("utf-8");
-
-let inputString = "";
-let currentLine = 0;
-
-process.stdin.on("data", function (inputStdin) {
-  inputString += inputStdin;
-});
-
-process.stdin.on("end", function () {
-  inputString = inputString.split("\n");
-
-  main();
-});
-
-function readLine() {
-  return inputString[currentLine++];
-}
-
-/*
- * Complete the 'getAverageTemperatureForUser' function below.
- *
- * URL for cut and paste
- * https://jsonmock.hackerrank.com/api/medical_records?userId=<userId>&page=<page>
- *
- * The function is expected to return a String value.
- * The function accepts a userId argumnent (Integer).
- *
- * In the case of an empty array result, return value '0'
- */
-
 const axios = require("axios");
 
 async function getAverageTemperatureForUser(userId) {
@@ -71,16 +34,4 @@ async function getPatientRecords(userId, records = [], page = 1) {
   }
 
   return records;
-}
-
-async function main() {
-  const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
-
-  const id = parseInt(readLine());
-
-  const result = await getAverageTemperatureForUser(id);
-
-  ws.write(result);
-
-  ws.end();
 }
