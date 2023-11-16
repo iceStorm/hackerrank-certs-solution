@@ -1,79 +1,20 @@
-'use strict';
-
-const fs = require('fs');
-
-process.stdin.resume();
-process.stdin.setEncoding("ascii");
-let inputString = "";
-let currentLine = 0;
-
-process.stdin.on("data", function (chunk) {
-    inputString += chunk;
-});
-process.stdin.on("end", function () {
-    inputString = inputString.split('\n');
-    main();
-});
-
-function readLine() {
-  return inputString[currentLine++];
-}
-
-
 /**
  * @param {{ id: number, state: string }[]} orderList
  * @param {number} orderId
  * @param {'Processing' | 'Delivered' } state
  */
 function processOrderList(orderList, orderId, state) {
-    switch (state) {
-        case 'Processing': {
-            orderList.find(o => o.id === orderId).state = state;
-            break;
-        }
-        
-        case 'Delivered': {
-            orderList = orderList.filter(o => o.id !== orderId)
-            break;
-        }
+  switch (state) {
+    case "Processing": {
+      orderList.find((o) => o.id === orderId).state = state;
+      break;
     }
 
-    
-    return orderList;
-}
-
-
-function main() {
-    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
-    
-    const orderCount = parseInt(readLine().trim());
-    let orderList = [];
-    for (let i = 0; i < orderCount; i++) {
-        orderList.push({
-            id: i + 1,
-            state: 'Received'
-        })
-    };
-    
-    let numberOfOperations = parseInt(readLine().trim());
-    let updatedOrderList = [...orderList];
-    while (numberOfOperations-- > 0) {
-        const inputs = readLine().trim().split(' ');
-        const orderId = parseInt(inputs[0]); 
-        const updatedState = inputs[1];
-
-        updatedOrderList = processOrderList(updatedOrderList, orderId, updatedState);
-        updatedOrderList = [...updatedOrderList];
+    case "Delivered": {
+      orderList = orderList.filter((o) => o.id !== orderId);
+      break;
     }
-    
-    if (updatedOrderList.length > 0) {
-        for (let i = 0; i < updatedOrderList.length; i++) {
-            const order = updatedOrderList[i];
-            ws.write(`Order with id ${order.id} is in ${order.state} state\n`);
-        };
-    } else {
-        ws.write(`All orders are in Delivered state\n`);
-    }
+  }
 
-    ws.end();
+  return orderList;
 }
