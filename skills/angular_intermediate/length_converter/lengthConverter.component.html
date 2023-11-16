@@ -1,0 +1,28 @@
+
+<div class="layout-row align-items-center justify-content-center mt-50">
+
+    <section class="layout-column align-items-center justify-content-between">
+      <span class="input layout-row">
+          <input type="number" class="large"
+          data-test-id="app-input1" [(ngModel)]="leftInputValue" (ngModelChange)="onInputChanges($event, 1)" />
+          <label class="suffix" data-test-id="app-label1">{{ leftDropdownItem?.unit }}</label>
+      </span>
+      <select data-test-id="app-select1" [(ngModel)]="leftDropdownValue" (ngModelChange)="onDropdownChanges($event, 1)">
+        <option *ngFor="let o of lengthOptions" [value]="o.id">{{ o.label }}</option>
+      </select>
+    </section>
+  
+    <label>⇋</label>
+  
+    <section class="layout-column align-items-center justify-content-between">
+        <span class="input layout-row">
+            <input type="number" class="large"
+            data-test-id="app-input2" [(ngModel)]="rightInputValue" (ngModelChange)="onInputChanges($event, 2)" />
+            <label class="suffix" data-test-id="app-label2">{{ rightDropdownItem?.unit }}</label>
+        </span>
+        <select data-test-id="app-select2" [(ngModel)]="rightDropdownValue" (ngModelChange)="onDropdownChanges($event, 2)">
+          <option *ngFor="let o of lengthOptions" [value]="o.id">{{ o.label }}</option>
+        </select>
+      </section>
+  </div>
+  

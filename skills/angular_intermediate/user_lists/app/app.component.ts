@@ -7,17 +7,19 @@ import { Item } from "../types/Item";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  bookList = [];
-  songList = [];
-
   Book: string = "Book";
   Song: string = "Song";
+
+  bookList = [];
+  songList = [];
 
   constructor() {}
 
   ngOnInit() {}
 
   onItemAdded(item) {
+    console.log("onItemAdded:", item);
+
     if (item.type === "Book") {
       this.bookList.push(item);
     } else {
@@ -25,5 +27,13 @@ export class AppComponent {
     }
   }
 
-  onItemDelete(item) {}
+  onItemDelete(name, type) {
+    console.log("onItemDelete:", name, type);
+
+    if (type === "Book") {
+      this.bookList = this.bookList.filter((item) => item.name !== name);
+    } else {
+      this.songList = this.songList.filter((item) => item.name !== name);
+    }
+  }
 }
