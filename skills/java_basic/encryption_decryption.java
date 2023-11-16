@@ -1,32 +1,36 @@
-public static String decryptMessage(String encryptedMessage) {
-    String[] words = encryptedMessage.split(" ", 0);
-    String[] reversedWords = new String[words.length];
-    
-    // reverse words
-    for (int i = words.length - 1; i >= 0 ; --i) {
-        reversedWords[words.length - i - 1] = words[i];
-    }
-    
-    // spread each word's letter frequency
-    StringBuilder sb = new StringBuilder();
-    
-    for (String word : reversedWords) {
-        for (int i = 0; i < word.length(); ++i) {
-            char letter = word.charAt(i);
-            boolean isDigit = Character.isDigit(letter);
+// 11/15 test cases passed
 
-            if (isDigit) {
-                for (int x = 0; x < Character.getNumericValue(letter); ++x) {
-                    sb.append(word.charAt(i - 1));
-                }
-                
-                continue;
+public static String decryptMessage(String encryptedMessage) {
+    // Split the input string into words
+    List<String> words = new ArrayList<String>(Arrays.asList(encryptedMessage.split(" ")));
+    Collections.reverse(words);
+
+    // Apply the decompression logic to each word
+    StringBuilder decryptedMessage = new StringBuilder();
+    for (String word : words) {
+        decryptedMessage.append(decompressWord(word)).append(" ");
+    }
+
+    // Trim any leading or trailing spaces and return the decrypted message
+    return decryptedMessage.toString().trim();
+}
+
+private static String decompressWord(String word) {
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = 0; i < word.length(); ++i) {
+        char letter = word.charAt(i);
+        boolean isDigit = Character.isDigit(letter);
+
+        if (isDigit) {
+            for (int x = 0; x < Character.getNumericValue(letter) - 1; ++x) {
+                sb.append(word.charAt(i - 1));
             }
             
-            sb.append(word.charAt(i));
+            continue;
         }
-
-        sb.append(" ");
+        
+        sb.append(word.charAt(i));
     }
 
     return sb.toString();
