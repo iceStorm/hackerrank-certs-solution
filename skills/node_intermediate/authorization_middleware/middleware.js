@@ -1,7 +1,9 @@
 const ROLES_FILE = __dirname + "/roles.txt";
 const fs = require("fs");
 
-const roles = require("./roles.json");
+// const roles = require("./roles.json");
+const fileContent = fs.readFileSync(ROLES_FILE, { encoding: "utf8" });
+const roles = Array.from(fileContent);
 
 module.exports = (scope) => (req, res, next) => {
   if (!scope) {
