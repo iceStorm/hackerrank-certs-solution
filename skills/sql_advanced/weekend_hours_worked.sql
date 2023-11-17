@@ -1,0 +1,30 @@
+-- MS SQL SERVER
+
+SET NOCOUNT ON;
+
+
+/*
+Enter your query below.
+Please append a semicolon ";" at the end of the query
+*/
+
+WITH hours_worked as (
+  
+SELECT
+      emp_id,
+         CASE 
+       WHEN datepart(minute,TIMESTAMP) >= datepart(minute,lag(TIMESTAMP) OVER(PARTITION BY CAST(TIMESTAMP AS date),emp_id ORDER BY TIMESTAMP)) then datepart(hour,timestamp) - datepart(hour,lag(TIMESTAMP) OVER(PARTITION BY CAST(TIMESTAMP AS date),emp_id ORDER BY TIMESTAMP)) 
+         ELSE datepart(hour,timestamp) - datepart(hour,lag(TIMESTAMP) OVER(PARTITION BY CAST(TIMESTAMP AS date),emp_id ORDER BY TIMESTAMP)) - 1
+       END AS hours_worked
+FROM   attendance
+-- only weekends
+WHERE  datepart(weekday,TIMESTAMP) IN(7,1)
+)
+SELECT
+   emp_id,
+      SUM(hours_worked) as hours_worked
+FROM  hours_worked
+GROUP BY emp_id
+ORDER BY hours_worked desc
+
+go
