@@ -12,8 +12,6 @@ function ProductValidation() {
           <label>
             <input
               type="text"
-              onInput={null}
-              onBlur={null}
               value={productName}
               data-testid="name-input"
               className={`white large outlined ${
@@ -42,8 +40,6 @@ function ProductValidation() {
             <input
               type="number"
               data-testid="quantity-input"
-              onInput={null}
-              onBlur={null}
               value={productQuantity}
               className={`white large outlined ${
                 productQuantity === "" && "error"
