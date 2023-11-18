@@ -1,9 +1,9 @@
 const ROLES_FILE = __dirname + "/roles.txt";
 const fs = require("fs");
 
-// const roles = require("./roles.json");
-const fileContent = fs.readFileSync(ROLES_FILE, { encoding: "utf8" });
-const roles = Array.from(fileContent);
+const fileContent = fs.readFileSync(ROLES_FILE, { encoding: "utf-8" });
+const roles = JSON.parse(fileContent.trim());
+console.log('\nroles:', roles);
 
 module.exports = (scope) => (req, res, next) => {
   if (!scope) {
@@ -11,7 +11,6 @@ module.exports = (scope) => (req, res, next) => {
   }
 
   const role = req.headers["x-role"];
-
   if (!role) {
     return res.status(403).end();
   }
