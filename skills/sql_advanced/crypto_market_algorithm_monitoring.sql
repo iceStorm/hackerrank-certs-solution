@@ -1,3 +1,11 @@
+-- MS SQL SERVER
+
+SET NOCOUNT ON;
+
+/*
+Enter your query below.
+Please append a semicolon ";" at the end of the query
+*/
 
 with difference as (
 
@@ -46,3 +54,6 @@ FROM   sequences
 GROUP BY sender
 HAVING SUM(amount) >= 150
 order by sender,MIN(dt),MAX(dt)
+
+
+go
