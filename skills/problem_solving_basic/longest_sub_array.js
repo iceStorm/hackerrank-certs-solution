@@ -1,43 +1,35 @@
-/**
- * @param {number[]} arr
- */
 function longestSubarray(arr) {
-  /**
-   * @type {number[][]}
-   */
-  const subArrays = [
-    [arr[0]], // default value for the first sub array
-  ];
+  let n = arr.length;
+  let ans = 0;
 
-  for (let i = 1; i < arr.length; ++i) {
-    const currentElement = arr[i];
-    const currentSubArray = subArrays[subArrays.length - 1];
-    const currentSubArrayLastElement = currentSubArray.slice(-1)[0];
-    const uniqueSubArr = new Set(currentSubArray);
+  // O(n^2) is okay because of constraints.
+  for (let i = 0; i < n; i++) {
+    let w = [];
+    let cnt = 0;
 
-    console.log(currentElement, currentSubArrayLastElement);
+    for (let j = i; j < n; j++) {
+      if (w.includes(arr[j])) {
+        cnt += 1;
+        continue;
+      }
 
-    const isCurrentElementValid =
-      currentSubArrayLastElement === currentElement ||
-      // check distance
-      (Math.abs(currentSubArrayLastElement - currentElement) < 2 &&
-        //  check uniqueness
-        (uniqueSubArr.has(currentElement) || uniqueSubArr.size < 2));
+      if (w.length === 0) {
+        w.push(arr[j]);
+      } else if (w.length === 1) {
+        if (Math.abs(w[0] - arr[j]) > 1) {
+          break;
+        } else {
+          w.push(arr[j]);
+        }
+      } else {
+        break;
+      }
 
-    if (isCurrentElementValid) {
-      currentSubArray.push(currentElement);
-    } else {
-      subArrays.push([currentElement]);
+      cnt += 1;
     }
+
+    ans = Math.max(ans, cnt);
   }
 
-  console.log("sub:", subArrays);
-  let longestLength = 0;
-  subArrays.forEach((sar) => {
-    if (sar.length > longestLength) {
-      longestLength = sar.length;
-    }
-  });
-
-  return longestLength;
+  return ans;
 }
