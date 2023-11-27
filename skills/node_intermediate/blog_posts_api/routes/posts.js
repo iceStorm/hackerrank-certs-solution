@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const postsController = require("../controllers/posts");
 
-router.post("", async (req, res) => {
+router.post("/", async (req, res) => {
   const payload = req.body;
 
   const createdPost = await postsController.createOne(payload);
@@ -10,7 +10,7 @@ router.post("", async (req, res) => {
   res.status(201).json(createdPost);
 });
 
-router.get("", async (req, res) => {
+router.get("/", async (req, res) => {
   const { author, isPublished } = req.query;
 
   const foundPosts = await postsController.getAll(author, isPublished);

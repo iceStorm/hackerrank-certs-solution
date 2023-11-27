@@ -14,11 +14,11 @@ module.exports = {
     const whereClause = {};
 
     if (author) {
-      whereClause["author"] = parseInt(author);
+      whereClause["author"] = author;
     }
 
-    if (isPublished && (isPublished == true || isPublished == false)) {
-      whereClause["isPublished"] = isPublished;
+    if (isPublished === "true" || isPublished === "false") {
+      whereClause["isPublished"] = isPublished === "true" ? 1 : 0;
     }
 
     return Posts.findAll({
